@@ -11,15 +11,10 @@ for (var a = 0; a < 7; a++) {
     var square = document.createElement('div');
     square.style.width = '11.1%';
     square.style.paddingBottom = '11.1%'
-    if (i % 2 === 0 && a % 2 === 0) {
-      square.style.background = 'black';
-    } else if (i % 2 !== 0 && a % 2 === 0) {
-      square.style.background = 'red';
-    } else if (i % 2 === 0 && a % 2 !== 0) {
-      square.style.background = 'red';
-    } else {
-      square.style.background = 'black';
-    }
+    var r = Math.floor(Math.random() * 255);
+    var g = Math.floor(Math.random() * 255);
+    var b = Math.floor(Math.random() * 255);
+    square.style.background = 'rgb(' + r + ',' + g + ',' + b + ')';
     row.appendChild(square);
   }
   body.appendChild(row);
