@@ -3,35 +3,82 @@
 var body = document.getElementsByTagName('body')[0];
 body.style.boxSizing = 'borderBox';
 body.style.margin = '0';
+var gameArray = squareGameLocation();
 
-for (var a = 0; a < 7; a++) {
-  var row = document.createElement('section');
-  row.style.height = '11.1%';
-  row.style.display = 'flex';
-  for (var i = 0; i < 9; i++) {
-    var square = document.createElement('div');
-    square.style.width = '11.1%';
-    square.style.paddingBottom = '11.1%'
-    var r = Math.floor(Math.random() * 255);
-    var g = Math.floor(Math.random() * 255);
-    var b = Math.floor(Math.random() * 255);
-    square.style.background = 'rgb(' + r + ',' + g + ',' + b + ')';
-    row.appendChild(square);
+function populateBoard() {
+  for (var a = 0; a < 7; a++) {
+    var row = document.createElement('section');
+    row.style.height = 'auto';
+    row.style.display = 'flex';
+    for (var i = 0; i < 9; i++) {
+      var square = document.createElement('div');
+
+      square.style.width = '100px';
+      square.style.height = '100px';
+      row.appendChild(square);
+    }
+    body.appendChild(row);
   }
-  body.appendChild(row);
 }
+
 
 function colorChangeTimer() {
   var squareArray = document.getElementsByTagName('div');
-  console.log("fire1");
-  console.log(squareArray);
   for (var i = 0; i < squareArray.length; i++) {
-    console.log("fire2");
-    let r = Math.floor(Math.random() * 255);
-    let g = Math.floor(Math.random() * 255);
-    let b = Math.floor(Math.random() * 255);
-    squareArray[i].style.background = 'rgb(' + r + ',' + g + ',' + b + ')';
+    squareArray[i].style.background = randomColorGenerator();
   }
 }
 
-setInterval(colorChangeTimer, 500)
+function randomColorGenerator() {
+  var r = Math.floor(Math.random() * 255);
+  var g = Math.floor(Math.random() * 255);
+  var b = Math.floor(Math.random() * 255);
+  return 'rgb(' + r + ',' + g + ',' + b + ')';
+}
+
+function prepareGame(gameArray) {
+  var squareArray = document.getElementsByTagName('div');
+  var winLocation = squareGameLocation();
+  for (var i = 0; i < squareArray.length; i++) {
+    var text = document.createElement('p');
+    text.style.textAlign = 'center';
+    text.style.verticalAlign = 'center';
+    text.style.fontSize = '2em';
+    text.style.display = 'none';
+    text.innerText = 'TEST';
+    squareArray[i].append(text);
+    var textArray = document.getElementsByTagName('p');
+    squareArray[i].addEventListener('click', function() {
+      this.childNodes[0].style.display = 'block';
+    })
+    if (i === winLocation) {
+      squareArray[i].childNodes[0].innerText = "YOU WIN!"
+    } else {
+      squareArray[i].childNodes[0].innerText = "Sorry..."
+    }
+  }
+
+  for (var i = 0; i < squareArray.length; i++) {
+    squareArray[i].addEventListener('mouseover', function() {
+      this.addEventListener('click', function() {
+        this.style.width = '300px';
+      });
+    });
+    squareArray[i].addEventListener('mouseout', function() {
+      this.style.opacity = '1';
+      this.style.width = '100px';
+    });
+
+  }
+}
+
+function squareGameLocation() {
+  return Math.floor(Math.random() * 63);
+}
+
+function setWinLocation() {
+
+}
+populateBoard(gameArray);
+prepareGame();
+setInterval(colorChangeTimer, 200)
