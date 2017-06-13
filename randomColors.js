@@ -49,6 +49,7 @@ function prepareGame(gameArray) {
     squareArray[i].append(text);
     var textArray = document.getElementsByTagName('p');
     squareArray[i].addEventListener('click', function() {
+      this.style.opacity = '1';
       this.childNodes[0].style.display = 'block';
     })
     if (i === winLocation) {
@@ -60,13 +61,13 @@ function prepareGame(gameArray) {
 
   for (var i = 0; i < squareArray.length; i++) {
     squareArray[i].addEventListener('mouseover', function() {
+      this.style.opacity = '0';
       this.addEventListener('click', function() {
-        this.style.width = '300px';
+        this.style.width = '200px';
       });
     });
     squareArray[i].addEventListener('mouseout', function() {
       this.style.opacity = '1';
-      this.style.width = '100px';
     });
 
   }
